@@ -14,6 +14,8 @@ callApi(
   $("#currency-text"),
   $("#joke-text"),
   $("#quote-text"),
+  $("#quote-author"),
   $("#word-text"),
-  $("#mean-text")
+  $("#mean-text"),
+  $("#word-text-en"),
 );
