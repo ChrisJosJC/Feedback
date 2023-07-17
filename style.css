@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgb(255, 255, 255);
   background-color: #0c0b0b;
 
   font-synthesis: none;
@@ -98,8 +98,11 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #000;
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.87);
+    color: #0c0b0b;
+  }
+  .card{
+    background-color: #f9f9f9 !important;
   }
   a:hover {
     color: #747bff;

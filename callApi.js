@@ -65,14 +65,10 @@ export default async function ($fact, $currency, $joke, $quote, $word, $mean) {
     .catch((err) => console.log(err));
 
   // Jokes
-  fetch("https://api.api-ninjas.com/v1/jokes", {
-    method: "GET",
-    headers: { "X-Api-Key": import.meta.env.VITE_API_KEY },
-    contentType: "application/json",
-  })
+  fetch("https://v2.jokeapi.dev/joke/Any?lang=es&blacklistFlags=religious,political&type=single")
     .then((res) => res.json())
     .then((data) => {
-      $joke.textContent = data[0].joke;
+      $joke.textContent = data.joke;
     })
     .catch((err) => console.log(err));
 }
