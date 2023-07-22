@@ -1,6 +1,8 @@
 import "./style.css";
-import "./callApi.js";
-import callApi from "./callApi.js";
+// import getEvents from "./scripts/getEvents";
+import callApi from "./scripts/callApi.js";
+
+// getEvents()
 
 const $ = (el) => document.querySelector(el);
 const $$ = (el) => document.querySelectorAll(el);

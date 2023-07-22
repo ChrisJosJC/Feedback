@@ -18,8 +18,8 @@ export async function Translate(text = "Hello world!", assignment = null) {
   fetch('https://api.edenai.run/v2/translation/automatic_translation', options)
     .then(response => response.json())
     .then(response => {
-      let result = response.phedone.text;
-      if(assignment !== null) {
+      let result = response?.phedone?.text;
+      if(assignment != null) {
         assignment.textContent = result
       }
       return result})

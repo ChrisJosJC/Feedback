@@ -1,4 +1,3 @@
-let quote, author
 import { Translate as Translate } from "./translater";
 
 export default async function ($fact, $currency, $joke, $quote, $quoteAuthor, $word, $mean, $word_en) {

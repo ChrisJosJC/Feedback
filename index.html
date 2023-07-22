@@ -1,56 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Feedback By ChrisJosJC</title>
-  </head>
-  <body>
-    <div id="app">
-      <h1 id="logo-icon" class="text-4xl animate-pulse">Feedback</h1>
-      <main>
-        <div id="cards" class="w-full grid gap-10">
 
-          <h1 id="logo-icon" class="text-4xl animate-pulse">Feedback</h1>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback By ChrisJosJC</title>
+</head>
 
-          <div class="card rounded-lg rounded-s-none rounded-e-none bg-black/20">
-            <h2>Word of the day</h2>
-            <span class="font-black text-lg uppercase" id="word-text"></span><br>
-            <span class="font-black text-md uppercase opacity-30" id="word-text-en"></span>
-            <p id="mean-text" class="font-bold italic"></p>
-          </div>
+<body>
+  <section id="app">
+    <h1 id="logo-icon" class="text-4xl animate-pulse">Feedback</h1>
+    <main>
+      <section id="cards" class="w-full grid gap-10">
 
-          <div class="card rounded-lg rounded-s-none rounded-e-none bg-black/20">
-            <h2>Funncy fact</h2>
-            <span class="font-black text-lg uppercase" id="fact-text"></span>
-          </div>
+        <h1 id="logo-icon" class="text-4xl animate-pulse">Feedback</h1>
 
-          <div class="card bg-black/20">
-            <h2>Quote of the day</h2>
-            <p class="font-black text-lg uppercase">
-              <span id="quote-text"></span>
-              <br><hr class="my-2"><i id="quote-author"></i>
-            </p>
-          </div>
+        <article class="card rounded-lg rounded-s-none rounded-e-none bg-black/20">
+          <h2>Word of the day</h2>
+          <span class="font-black text-lg uppercase" id="word-text"></span><br>
+          <span class="font-black text-md uppercase opacity-30" id="word-text-en"></span>
+          <p id="mean-text" class="font-bold italic"></p>
+        </article>
 
-          <div class="card bg-black/20">
-            <h2>Joke of the day</h2>
-            <span class="font-black text-lg uppercase" id="joke-text"></span>
-          </div>
+        <article class="card rounded-lg rounded-s-none rounded-e-none bg-black/20">
+          <h2>Funncy fact</h2>
+          <span class="font-black text-lg uppercase" id="fact-text"></span>
+        </article>
 
-          <div class="card bg-black/20">
-            <h2>Dollar's worth</h2>
-            <span class="font-black text-7xl uppercase" id="currency-text"></span><b class="block"> En pesos dominicanos</b>
-          </div>
-          
-          <img src="https://picsum.photos/1200/800" class="object-cover rounded-md">
+        <article class="card bg-black/20">
+          <h2>Quote of the day</h2>
+          <p class="font-black text-lg uppercase">
+            <span id="quote-text"></span>
+            <br>
+            <hr class="my-2"><i id="quote-author"></i>
+          </p>
+        </article>
 
-        </div>
-        <a href="https://github.com/ChrisJosJC" id="logo-icon" class="mt-6 text-md hover:text-stone-600 animate-pulse"> Now in Spanish by @ChrisJosJC 😼</a>
+        <article class="card bg-black/20">
+          <h2>Joke of the day</h2>
+          <span class="font-black text-lg uppercase" id="joke-text"></span>
+        </article>
+
+        <article class="card bg-black/20">
+          <h2>Dollar's worth</h2>
+          <span class="font-black text-7xl uppercase" id="currency-text"></span><b class="block"> En pesos
+            dominicanos</b>
+        </article>
+
+        <img src="https://picsum.photos/1200/800" class="object-cover rounded-md">
+
+        <article class="card bg-black/20 grid col-span-full place-items-center gap-4" id="calendar-content">
+          <h2 class="col-span-full grid font-black text-xl text-white">Ve los ultimos eventos de tu calendario</h2>
+          <!--Add buttons to initiate auth sequence and sign out-->
+          <button class="font-bold bg-stone-900 dark:text-white outline-none border-none dark:hover:bg-white dark:hover:text-black hover:bg-black px-10 py-2" id="authorize_button" onclick="handleAuthClick()">Autorizar</button>
+
+          <p id="content" style="white-space: pre-wrap;"></p>
+        </article>
+      </section>
+      <a href="https://github.com/ChrisJosJC" id="logo-icon" class="mt-6 text-md hover:text-stone-600 animate-pulse">
+        Now in Spanish by @ChrisJosJC 😼</a>
       </div>
-      </main>
+
+    </main>
     </div>
     <script type="module" src="/main.js"></script>
-  </body>
+    <script>
+      // TODO: Mejorar el diseño de la card de eventos
+      const CLIENT_ID = "1019828864979-4osf77ql988h1lsmrinn7c6mo1h17oa1.apps.googleusercontent.com";
+      const API_KEY = "AIzaSyA_cv1iGAmMSBg4jBy4LynP7UvprKIXbps";
+
+      // Discovery doc URL for APIs used by the quickstart
+      const DISCOVERY_DOC = "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest";
+
+      const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+
+    let tokenClient;
+    let gapiInited = false;
+    let gisInited = false;
+
+    document.getElementById('authorize_button').style.visibility = 'hidden';
+
+    function gapiLoaded() {
+      gapi.load('client', initializeGapiClient);
+    }
+
+    async function initializeGapiClient() {
+      await gapi.client.init({
+        apiKey: API_KEY,
+        discoveryDocs: [DISCOVERY_DOC],
+      });
+
+      const token = localStorage.getItem('google_access_token');
+      if (token) {
+        gapi.client.setToken(JSON.parse(token));
+        document.getElementById('authorize_button').innerText = 'Refrescar';
+        await listUpcomingEvents();
+      }
+
+      gapiInited = true;
+      maybeEnableButtons();
+    }
+
+    function gisLoaded() {
+      tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: '',
+      });
+      gisInited = true;
+      maybeEnableButtons();
+    }
+
+    function maybeEnableButtons() {
+      if (gapiInited && gisInited) {
+        document.getElementById('authorize_button').style.visibility = 'visible';
+      }
+    }
+
+    function handleAuthClick() {
+      tokenClient.callback = async (resp) => {
+        if (resp.error !== undefined) {
+          throw (resp);
+        }
+        document.getElementById('authorize_button').innerText = 'Refrescar';
+        await listUpcomingEvents();
+        localStorage.setItem('google_access_token', JSON.stringify(resp));
+      };
+
+      if (gapi.client.getToken() === null) {
+        tokenClient.requestAccessToken({ prompt: 'consent' });
+      } else {
+        tokenClient.requestAccessToken({ prompt: '' });
+      }
+    }
+
+    function handleSignoutClick() {
+      const token = gapi.client.getToken();
+      if (token !== null) {
+        google.accounts.oauth2.revoke(token.access_token);
+        gapi.client.setToken('');
+        document.getElementById('content').innerText = '';
+        document.getElementById('authorize_button').innerText = 'Authorize';
+  
+        localStorage.removeItem('google_access_token');
+      }
+    }
+
+      async function listUpcomingEvents() {
+        let response;
+        try {
+          const request = {
+            calendarId: "primary",
+            timeMin: new Date().toISOString(),
+            showDeleted: false,
+            singleEvents: true,
+            maxResults: 10,
+            orderBy: "startTime",
+          };
+          response = await gapi.client.calendar.events.list(request);
+        } catch (err) {
+          document.getElementById("content").innerText = err.message;
+          return;
+        }
+
+        const events = response.result.items;
+        if (!events || events.length == 0) {
+          document.getElementById("content").innerText = "No hay eventos recientes";
+          return;
+        }
+
+        let event = events[0]
+        const output = `<h2 class="col-span-full grid font-black text-xl text-white">Ultimos eventos de tu calendario</h2>
+
+        
+        <div>
+          <h3>${event.summary}</h3> <b>${new Date(event.start.dateTime || event.start.date).toDateString()}</b>
+          </div>`
+        document.getElementById("calendar-content").innerHTML = output;
+      }
+    </script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+</body>
+
 </html>
