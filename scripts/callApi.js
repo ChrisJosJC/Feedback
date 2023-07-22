@@ -36,7 +36,7 @@ export default async function ($fact, $currency, $joke, $quote, $quoteAuthor, $w
   })
     .then((res) => res.json())
     .then(async (data) => {
-      Translate(data.word, $word)
+      await Translate(data.word, $word)
       $word_en.textContent = data.word
       return data.word;
     })
@@ -48,8 +48,10 @@ export default async function ($fact, $currency, $joke, $quote, $quoteAuthor, $w
       })
         .then((res) => res.json())
         .then(async (data) => {
-          let texto = await data.definition?.split(". 2. ")[0]
-          await Translate(texto,$mean)
+          let texto = await data.definition.split(". 2. " || "\n")[0]
+          console.log("Significado de la palabra:", texto)
+          setTimeout(()=>{},1500)
+          Translate(texto,$mean)
         });
     })
     .catch((err) => console.log(err));
@@ -63,7 +65,7 @@ export default async function ($fact, $currency, $joke, $quote, $quoteAuthor, $w
     .then((res) => res.json())
     .then(async (data) => {
       await Translate(data[0].quote, $quote)
-      await Translate(data[0].author, $quoteAuthor)
+      $quoteAuthor.textContent = data[0].author
     })
     .catch((err) => console.log(err));
 

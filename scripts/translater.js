@@ -11,18 +11,21 @@ export async function Translate(text = "Hello world!", assignment = null) {
       response_as_dict: true,
       target_language: 'es',
       source_language: 'en',
-      text: text
+      text
     })
   };
   
+  setTimeout(()=>{},1000)
   fetch('https://api.edenai.run/v2/translation/automatic_translation', options)
     .then(response => response.json())
     .then(response => {
-      let result = response?.phedone?.text;
+      let result = response.phedone?.text;
       if(assignment != null) {
         assignment.textContent = result
       }
-      return result})
+      console.log(response);
+      return result || text
+    })
     .catch(err => console.error(err));
 
     
