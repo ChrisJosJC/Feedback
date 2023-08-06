@@ -15,7 +15,6 @@
     "vite": "^4.4.0"
   },
   "dependencies": {
-    "bing-translate-api": "^2.9.1",
-    "google-translate-free": "^2.4.5"
+    "puppeteer": "^20.9.0"
   }
 }

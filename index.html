@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+  <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Feedback By ChrisJosJC</title>
 </head>
@@ -42,20 +43,24 @@
           <span class="font-black text-lg uppercase" id="joke-text"></span>
         </article>
 
+        <img src="https://picsum.photos/1200/800" class="object-cover rounded-md">
+
         <article class="card bg-black/20">
           <h2>Dollar's worth</h2>
           <span class="font-black text-7xl uppercase" id="currency-text"></span><b class="block"> En pesos
             dominicanos</b>
         </article>
 
-        <img src="https://picsum.photos/1200/800" class="object-cover rounded-md">
 
-        <article class="card bg-black/20 grid col-span-full place-items-center gap-4" id="calendar-content">
-          <h2 class="col-span-full grid font-black text-xl text-white">Ve los ultimos eventos de tu calendario</h2>
-          <!--Add buttons to initiate auth sequence and sign out-->
-          <button class="font-bold bg-stone-900 dark:text-white outline-none border-none dark:hover:bg-white dark:hover:text-black hover:bg-black px-10 py-2" id="authorize_button" onclick="handleAuthClick()">Autorizar</button>
+        <article class="card rounded-lg rounded-s-none rounded-e-none bg-black/20 col-span-full" id="news-content">
+          <h2 class="font-black text-lg uppercase"  id="title"></h2>
+          <p class="font-bold text-md uppercase opacity-90" id="description"></p>
+          <i class="font-bold opacity-30" id="author"></i>
+        </article>
 
-          <p id="content" style="white-space: pre-wrap;"></p>
+        <article class="card bg-black/20 col-span-full">
+          <h2 class="font-black text-lg uppercase">Verse of the day</h2>
+          <span class="font-black text-lg uppercase" id="verse"></span>
         </article>
       </section>
       <a href="https://github.com/ChrisJosJC" id="logo-icon" class="mt-6 text-md hover:text-stone-600 animate-pulse">
@@ -65,7 +70,7 @@
     </main>
     </div>
     <script type="module" src="/main.js"></script>
-    <script>
+    <!-- <script>
       // TODO: Mejorar el diseño de la card de eventos
       const CLIENT_ID = "1019828864979-4osf77ql988h1lsmrinn7c6mo1h17oa1.apps.googleusercontent.com";
       const API_KEY = "AIzaSyA_cv1iGAmMSBg4jBy4LynP7UvprKIXbps";
@@ -181,7 +186,7 @@
       }
     </script>
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
-    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script> -->
 </body>
 
 </html>

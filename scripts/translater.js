@@ -15,16 +15,16 @@ export async function Translate(text = "Hello world!", assignment = null) {
     })
   };
   
-  setTimeout(()=>{},1000)
   fetch('https://api.edenai.run/v2/translation/automatic_translation', options)
     .then(response => response.json())
     .then(response => {
-      let result = response.phedone?.text;
+      setTimeout(()=>{},Math.floor(Math.random()*10000))
+      let result = response.phedone?.text == null ? text : response.phedone.text;
       if(assignment != null) {
         assignment.textContent = result
       }
       console.log(response);
-      return result || text
+      return result
     })
     .catch(err => console.error(err));
 
