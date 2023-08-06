@@ -24,11 +24,11 @@ export async function Translate(text = "Hello world!", assignment = null) {
         assignment.textContent = result
         return true
       }
-      console.log(response);
+      // console.log(response);
       assignment.textContent = result
       return false
     })
-    .catch(err => console.error(err));
+    // .catch(err => console.error(err));
 
     
 }
