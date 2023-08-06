@@ -19,12 +19,14 @@ export async function Translate(text = "Hello world!", assignment = null) {
     .then(response => response.json())
     .then(response => {
       setTimeout(()=>{},Math.floor(Math.random()*10000))
-      let result = response.phedone?.text == null ? text : response.phedone.text;
+      let result = response?.phedone?.text == null ? text : response.phedone.text;
       if(assignment != null) {
         assignment.textContent = result
+        return true
       }
       console.log(response);
-      return result
+      assignment.textContent = result
+      return false
     })
     .catch(err => console.error(err));
 

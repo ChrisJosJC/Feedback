@@ -1,4 +1,5 @@
 import callApi from "./scripts/callApi.js";
+import scrapper from "/scripts/scrapper.js"
 
 const $ = (el) => document.querySelector(el);
 const $$ = (el) => document.querySelectorAll(el);
@@ -19,3 +20,5 @@ callApi({
   $news: $("#news-content"),
   $verse: $("#verse"),
 });
+
+scrapper()

@@ -108,7 +108,7 @@ export default async function ({ $fact,
       .then((result) => {
         const {articles} = result;
         let [article] = articles;
-        let {author,title,description,url } =article
+        let {author,title,description,url } = article
 
         $news.querySelector("#title").textContent = title
         $news.querySelector("#description").textContent = description
